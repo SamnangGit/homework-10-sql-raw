@@ -19,8 +19,12 @@ Query all employee records from the employee table
 And query employee with condition, emp_num > 101
 '''
 
-# cursor.execute("SELECT * FROM employee")
-# employees = cursor.fetchall()
+cursor.execute("SELECT * FROM employee")
+employees = cursor.fetchall()
+
+# print(employees)
+
+# datetime.str
 
 # for employee in employees:
 #     print(employee[0], employee[1], employee[2], employee[3], employee[4].strftime('%d-%B-%Y'))
@@ -57,21 +61,52 @@ Join employee with job and select emp_num, emp_lname, emp_fname, emp_initial, em
 Insert new employee record, emp_num = 999, emp_lname = Doe, emp_fname = John, emp_initial = D, emp_hiredate = current date
 '''
 
+today = datetime.now()
+sql = 'INSERT INTO employee (emp_num, emp_lname, emp_fname, emp_initial, emp_hiredate) VALUES (%s, %s, %s, %s, %s)'
+value = (999, 'Doe', 'John', 'D', today)
+
+cursor.execute(sql, value)
+
+DB.commit()
+print(cursor.rowcount, "record inserted.")
 
 
 '''
 Update employee record, job_code = 510 where emp_num = 999
 '''
+sql = 'UPDATE employee SET job_code = %s WHERE emp_num = %s'
+value = (510, 999)
+
+cursor.execute(sql, value)
+
+DB.commit()
+
 
 
 
 '''
 Delete employee record, emp_num = 999
 '''
+sql = 'DELETE FROM employee WHERE emp_num = %s'
+value = (999, )
+
+cursor.execute(sql, value)
+
+DB.commit()
 
 
 
 '''
 Query assigment where assign_date is larger than 2010-01-01
 '''
+sql = 'SELECT * FROM assignment WHERE assign_date > %s'
+value = ('2010-01-01', )
+
+cursor.execute(sql, value)
+assignments = cursor.fetchall()
+
+for assignment in assignments:
+    print(assignment[0], assignment[1], assignment[2], assignment[3].strftime('%d-%B-%Y'), assignment[4].strftime('%d-%B-%Y'))
+
+    
 
